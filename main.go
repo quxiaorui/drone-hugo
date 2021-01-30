@@ -19,8 +19,13 @@ func main() {
 	app.Version = version
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
+			Name:   "minify",
+			Usage:  "minify any supported output format (HTML, XML etc.)",
+			EnvVar: "PLUGIN_MINIFY",
+		},
+		cli.BoolFlag{
 			Name:   "drafts",
-			Usage:  " include content marked as draft",
+			Usage:  "include content marked as draft",
 			EnvVar: "PLUGIN_BUILDDRAFTS,PLUGIN_DRAFTS",
 		},
 		cli.BoolFlag{
@@ -107,6 +112,7 @@ func run(c *cli.Context) error {
 	plugin := Plugin{
 		Config: Config{
 			URL:      c.String("url"),
+			Minify:   c.Bool("minify"),
 			Drafts:   c.Bool("drafts"),
 			Expired:  c.Bool("expired"),
 			Future:   c.Bool("future"),

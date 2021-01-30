@@ -17,6 +17,7 @@ type (
 
 	Config struct {
 		URL      string
+		Minify   bool
 		Drafts   bool
 		Expired  bool
 		Future   bool
@@ -83,6 +84,10 @@ func commandValidate(config Config) *exec.Cmd {
 
 func commandBuild(config Config) *exec.Cmd {
 	var args = make([]string, 0)
+
+	if config.Minify {
+		args = append(args, "--minify")
+	}
 
 	if config.Drafts {
 		args = append(args, "-D")
